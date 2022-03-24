@@ -13,14 +13,33 @@ namespace Casino
 
             bool ProgramRunning = true;
 
+            //Casinot
             Casino CasinoRoyal = new Casino(1, "Casino Royal", "Göteborg");
 
+            //Användare 
             User Viking = new User(1, "Viking12", "lösenord", "Viking", "Hesse", 18, true);
             CasinoRoyal.User.Add(Viking);
             User Kian = new User(3, "Kian", "123", "Kian", "Loniakan", 18, true);
             CasinoRoyal.User.Add(Kian);
             User Liam = new User(4, "Liam", "daddy123", "Liam", "Turelid", 18, true);
             CasinoRoyal.User.Add(Liam);
+
+
+            //Manager
+            Manager manager1 = new Manager(1, "God");
+            CasinoRoyal.Employees.Add(manager1);
+
+
+            //Programmerare
+            Programmers programmer1 = new Programmers(1, "Gamer");
+            manager1.AllProgrammers.Add(programmer1);
+
+            Programmers Burek = new Programmers(2, "Burek");
+            manager1.AllProgrammers.Add(Burek);
+
+            //Att göra lista
+            List<string> ToDoList = new List<string>();
+
 
             while (ProgramRunning == true)
             {
@@ -31,14 +50,14 @@ namespace Casino
 
                 else
                 {
-                    Console.WriteLine("vad vill du göra vill du använda dig av \n 1. programmerare \n 2. Manager \n 3. Users");
+                    Console.WriteLine("vad vill du göra vill du använda dig av \n 1. User \n 2. Manager \n 3. Programmer \n 4. EXIT");
 
                     int göra = int.Parse(Console.ReadLine());
 
                     switch (göra)
                     {
                         case 1:
-                            Console.WriteLine("OK! vill du 1. skapa en user eller vill du 2. avnvända en user");
+                            Console.WriteLine("OK! vill du 1. skapa en user eller vill du 2. använda en user");
                             göra = int.Parse(Console.ReadLine());
                             switch (göra)
                             {
@@ -86,10 +105,124 @@ namespace Casino
 
                             break;
                         case 2:
+                            Console.WriteLine("Vill du 1. skapa manager eller 2. använda manager");
+                            göra = int.Parse(Console.ReadLine());
+                            switch (göra)
+                            {
+                                case 1:
+                                    Console.WriteLine("OK! Skriv nu ditt id och namn");
+                                    int Id = int.Parse(Console.ReadLine());
+                                    string Name = Console.ReadLine();
+                                    Manager manager = new Manager(Id, Name);
+                                    CasinoRoyal.Employees.Add(manager);
+                                    Console.WriteLine("nu finns det:");
+                                    foreach (var Manager in CasinoRoyal.Employees)
+                                    {
+                                        Console.WriteLine(Manager.Id);
+                                        Console.WriteLine(Manager.Name);
+                                        Console.WriteLine("----------------------------");
+                                    }
+                                    break;
+                                case 2:
+                                    Console.WriteLine("Skriv ditt id och namn");
+                                    Id = int.Parse(Console.ReadLine());
+                                    Name = Console.ReadLine();
+                                    foreach (var Employees in CasinoRoyal.Employees)
+                                    {
+                                        if (Id == Employees.Id && Name == Employees.Name)
+                                        {
+                                            Console.WriteLine($"Hejsan {Employees.Name} vill du 1. anställa programmerare eller 2. se programmerare");
+                                            göra = int.Parse(Console.ReadLine());
+                                            switch (göra)
+                                            {
+                                                case 1:
+                                                    Console.WriteLine("Ok! Skriv deras Id och namn");
+                                                    Id = int.Parse(Console.ReadLine());
+                                                    Name = Console.ReadLine();
+                                                    Programmers programmer = new Programmers(Id, Name);
+                                                    manager1.AllProgrammers.Add(programmer);
+                                                    Console.WriteLine("här är alla programmerare");
+                                                    foreach (var Programmer in manager1.AllProgrammers)
+                                                    {
+                                                        Console.WriteLine(Programmer.Id);
+                                                        Console.WriteLine(Programmer.Name);
+                                                        Console.WriteLine("-----------------------");
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    Console.WriteLine("här är alla programmerare");
+                                                    foreach (var Programmer in manager1.AllProgrammers)
+                                                    {
+                                                        Console.WriteLine(Programmer.Id);
+                                                        Console.WriteLine(Programmer.Name);
+                                                        Console.WriteLine("-----------------------");
+                                                    }
+
+                                                    break;
+                                                default:
+                                                    Console.WriteLine("Skriv med siffror!");
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("skriv med siffror!");
+                                    break;
+                            }
 
                             break;
                         case 3:
 
+                            Console.WriteLine("Välj en programmerare att logga in som: ");
+                            foreach (var Programmer in manager1.AllProgrammers)
+                            {
+                                Console.WriteLine(Programmer.Id);
+                                Console.WriteLine(Programmer.Name);
+                                Console.WriteLine("-----------------------");
+                            }
+                            Console.WriteLine("Skriv in id och namn");
+                            int programmerId = int.Parse(Console.ReadLine());
+                            string programmerName = Console.ReadLine();
+
+                            foreach (var Programmer in manager1.AllProgrammers)
+                            {
+                                if (programmerId == Programmer.Id && programmerName == Programmer.Name)
+                                {
+
+                                    Console.WriteLine("Vill du 1. lägga till i to-do lista eller 2. se lista");
+                                    göra = int.Parse(Console.ReadLine());
+                                    switch (göra)
+                                    {
+                                        case 1:
+                                            Console.WriteLine("Vad vill du lägga till?");
+                                            string del = Console.ReadLine();
+                                            ToDoList.Add(del);
+                                            Console.WriteLine("Tillagt!");
+
+                                            break;
+                                        case 2:
+                                            Console.WriteLine("Detta finns i listan: ");
+                                            int i = 1;
+                                            foreach (string item in ToDoList)
+                                            {
+                                                Console.WriteLine($"{i}. {item}");
+                                                i++;
+                                            }
+
+                                            break;
+                                        default:
+                                            Console.WriteLine("skriv med siffror!");
+                                            break;
+                                    }
+
+                                }
+                            }
+
+
+                            break;
+                        case 4:
+                            ProgramRunning = false;
                             break;
                         default:
                             Console.WriteLine("Du måste skriva siffrorna");

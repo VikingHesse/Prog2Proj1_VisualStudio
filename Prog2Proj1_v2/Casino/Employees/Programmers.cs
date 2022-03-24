@@ -22,7 +22,7 @@ namespace Casino
 
         public Programmers(int id, string Name)
         {
-            this.Id = Id;
+            this.Id = id;
             this.Name = Name;
         }
 

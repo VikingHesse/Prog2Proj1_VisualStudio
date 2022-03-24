@@ -10,6 +10,12 @@ namespace Casino
     {
 
         //Ändrade private till private void
+
+        public Manager(int Id, string name)
+        {
+            this.Id = Id;
+            this.Name = name;
+        }
         private void HireEmployee()
         {
 
@@ -25,15 +31,6 @@ namespace Casino
             {
                 Programmers programmer = new Programmers(Id, Name);
             }
-        }
-
-        //Ändrade private till private void
-        private void FireEmployee()
-        {
-
-            int Id = int.Parse(Console.ReadLine());
-
-            Employees.RemoveEmployee(Id);
         }
 
         //Ändrade private till private void
